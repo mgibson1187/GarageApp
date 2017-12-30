@@ -4,6 +4,8 @@ npm install
 ```
 
 # Start scripts
+First rename config.js.user to config.js.
+
 Run the following script to start app for debugger.
 ```bash
 npm run start-dev
