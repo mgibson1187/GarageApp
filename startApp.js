@@ -2,7 +2,10 @@ const { spawn } = require('child_process');
 
 const command = 'react-native';
 
-const runArgs = [
+const runArgs = process.env.NODE_ENV === 'production' ? [
+  'run-android',
+  '--variant=release'
+] : [
   'run-android'
 ];
 
@@ -15,5 +18,9 @@ const options = {
   stdio: 'inherit'
 };
 
-const run = spawn(command, runArgs, options);
-const log = spawn(command, logArgs, options);
+if (process.env.NODE_ENV === 'production') {
+  const run = spawn(command, runArgs, options);
+} else {
+  const run = spawn(command, runArgs, options);
+  const log = spawn(command, logArgs, options);
+}

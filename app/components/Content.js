@@ -6,8 +6,8 @@ const styles = StyleSheet.create({
 	myView: {
 		backgroundColor: '#c1bebd',
 		borderRadius: 2,
-    borderWidth: 1,
-    borderColor: '#232323',
+		borderWidth: 1,
+		borderColor: '#232323',
 		height: 200,
 		marginTop: 50,
 		marginBottom: 50,
@@ -20,65 +20,98 @@ const styles = StyleSheet.create({
 		marginTop: 10
 	},
 	image: {
-		flex:1,
+		flex: 1,
 		height: undefined,
 		width: undefined,
 		marginBottom: 5
 	}
 });
 
-export default class Content extends Component{
-	constructor(props) {
-		super(props);
-		this.state = {
-			status: 'connecting'
-		};
-		this.getStatus = this.getStatus.bind(this);
-	}
+class StatusText extends Component {
+	propTypes = {
+		doorSensor: PropTypes.number
+	};
 
-	componentWillMount() {
-		this.getStatus(this.props.doorSensor, this.props.connection);
+	render() {
+		const {doorSensor} = this.props;
+		switch (doorSensor) {
+			case (1):
+				return (
+					<Text style={[styles.myText, {color: 'red'}]}>Status: open</Text>
+				);
+			case (0):
+				return (
+					<Text style={[styles.myText, {color: 'black'}]}>Status: closed</Text>
+				);
+			default:
+				return (
+					<Text style={[styles.myText, {color: 'black'}]}>Status: connecting</Text>
+				);
+		}
 	}
+}
+
+class StatusImage extends Component {
+	propTypes = {
+		doorSensor: PropTypes.number
+	};
+
+	render() {
+		const {doorSensor} = this.props;
+		switch (doorSensor) {
+			case (1):
+				return (
+					<Image
+						style={styles.image}
+						source={require('../../img/door_open.png')}
+						resizeMode="contain"
+					/>
+				);
+			case (0):
+				return (
+					<Image
+						style={styles.image}
+						source={require('../../img/door_closed.png')}
+						resizeMode="contain"
+					/>
+				);
+			default:
+				return (
+					<Image
+						style={styles.image}
+						source={require('../../img/connecting.png')}
+						resizeMode="contain"
+					/>
+				);
+		}
+	}
+}
+
+export default class Content extends Component {
+	propTypes = {
+		doorSensor: PropTypes.number
+	};
 
 	shouldComponentUpdate(prevProps) {
-		if (prevProps.doorSensor !== this.props.doorSensor) {
-			return true;
-		}
-		if (prevProps.connection !== this.props.connection) {
+		const {doorSensor} = this.props;
+		if (prevProps.doorSensor !== doorSensor) {
 			return true;
 		}
 		return false;
 	}
 
-	getStatus(data, door) {
-		if (data && door === 1) {
-			this.setState({
-				status: 'open'
-			});
-		} else if (data && door === 0) {
-			this.setState({
-				status: 'closed'
-			});
-		}
-	}
-
-	render(){
-		return(
+	render() {
+		const {doorSensor} = this.props;
+		console.log(`Content Door Sensor: ${doorSensor}`);
+		return (
 			<View style={styles.myView}>
-				<Text style={[styles.myText, {color: 'black'}]}>Status: {this.state.status}</Text>
-				<Image
-				  style={styles.image}
-					source={require('../../img/connecting.png')}
-				  resizeMode="contain"
-				/>
+				<StatusText
+					doorSensor={doorSensor} />
+				<StatusImage
+					doorSensor={doorSensor} />
 			</View>
 		);
 	}
 }
-
-Content.propTypes = {
-	doorSensor: PropTypes.number,
-	connection: PropTypes.string
-};
 
 AppRegistry.registerComponent('Content', () => Content);

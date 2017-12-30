@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import {AppRegistry, View, Text, StyleSheet, TouchableOpacity} from 'react-native';
-import SocketIOClient from 'socket.io-client';
-import config from '../../config';
+import PropTypes from 'prop-types'
 
 const styles = StyleSheet.create({
 	myView: {
@@ -14,12 +13,12 @@ const styles = StyleSheet.create({
 		color: '#d1cecc'
 	},
 	button: {
-    justifyContent: 'center',
-    alignItems: 'center',
+		justifyContent: 'center',
+		alignItems: 'center',
 		backgroundColor: '#4f4e4d',
 		borderRadius: 10,
-    borderWidth: 1,
-    borderColor: '#232323',
+		borderWidth: 1,
+		borderColor: '#232323',
 		height: 80,
 		marginTop: 20,
 		marginLeft: 38,
@@ -27,22 +26,16 @@ const styles = StyleSheet.create({
 	}
 });
 
-export default class Button extends Component{
-	constructor(props){
-		super(props);
-		this.onPress = this.onPress.bind(this);
-		this.socket = new SocketIOClient(config.myInfo.ip_address);
-	}
+export default class Button extends Component {
+	propTypes = {
+		onPress: PropTypes.func
+	};
 
-	onPress(){
-		console.log('Button Pressed');
-		this.socket.emit('reply', {});
-	}
-
-	render(){
-		return(
+	render() {
+		const {onPress} = this.props;
+		return (
 			<View style={styles.myView}>
-				<TouchableOpacity style={styles.button} onPress={this.onPress}>
+				<TouchableOpacity style={styles.button} onPress={onPress}>
 					<Text style={styles.myText}>DOOR</Text>
 				</TouchableOpacity>
 			</View>

@@ -3,10 +3,17 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "better-npm-run start"
+    "start-dev": "better-npm-run start-dev",
+    "start-prod": "better-npm-run start-prod"
   },
   "betterScripts": {
-    "start": {
+    "start-dev": {
+      "command": "node startApp.js",
+      "env": {
+        "NODE_ENV": "development"
+      }
+    },
+    "start-prod": {
       "command": "node startApp.js",
       "env": {
         "NODE_ENV": "production"

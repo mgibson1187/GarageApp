@@ -23,6 +23,7 @@ export default class App extends Component {
     };
     this._handleNetInfoChange = this._handleNetInfoChange.bind(this);
     this.socket = new SocketIOClient(config.myInfo.ip_address);
+    this.onPress = this.onPress.bind(this);
     this.socket.on('recieve', (res) => {
       this.setState({
         doorSensor: res.state
@@ -39,21 +40,34 @@ export default class App extends Component {
     NetInfo.removeEventListener('change', this._handleNetInfoChange);
   }
 
+  onPress() {
+    console.log('Button Pressed');
+    this.socket.emit('reply', {});
+  }
+
   _handleNetInfoChange(info) {
-    this.setState({
-      connection: info
-    });
+    if (info === 'NONE') {
+      this.setState({
+        connection: info,
+        doorSensor: null
+      });
+    } else {
+      this.setState({
+        connection: info
+      });
+    }
   }
 
   render() {
+    const {doorSensor} = this.state;
     return (
       <View style={styles.myView}>
         <Intro />
         <Content
-          doorSensor={this.state.doorSensor}
-          connection={this.state.connection}/>
-        {this.state.connection === 'NONE' ? (null) : (
-          <Button />
+          doorSensor={doorSensor} />
+        {(doorSensor === null) ? (null) : (
+          <Button
+            onPress={this.onPress} />
         )}
       </View>
     );
