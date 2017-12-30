@@ -29,6 +29,7 @@
     "no-console": "off",
     "react/prefer-stateless-function": "off",
     "global-require": "off",
+    "semi":"error",
     "react/no-multi-comp": "off",
     "react/jsx-filename-extension": [
       1,
