@@ -41,7 +41,6 @@ export default class App extends Component {
   }
 
   onPress() {
-    console.log('Button Pressed');
     this.socket.emit('reply', {});
   }
 
@@ -60,6 +59,7 @@ export default class App extends Component {
 
   render() {
     const {doorSensor} = this.state;
+
     return (
       <View style={styles.myView}>
         <Intro />

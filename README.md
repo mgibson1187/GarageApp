@@ -1,10 +1,15 @@
-# Start scripts
+# Run install
 ```bash
-react-native run-android
-react-native log-android
+npm install
 ```
 
+# Start scripts
+Run the following script to start app for debugger.
 ```bash
-rm -rf node_modules
-rm -fr $TMPDIR/react-*
+npm run start-dev
+```
+
+To run start-prod, first follow the instructions at [react-native](http://facebook.github.io/react-native/docs/signed-apk-android.html) and run as admin.
+```bash
+npm run start-prod
 ```

@@ -8,19 +8,20 @@
   },
   "betterScripts": {
     "start-dev": {
-      "command": "node startApp.js",
+      "command": "concurrently --kill-others \"react-native run-android\" \"react-native log-android\"",
       "env": {
         "NODE_ENV": "development"
       }
     },
     "start-prod": {
-      "command": "node startApp.js",
+      "command": "react-native run-android --variant=release",
       "env": {
         "NODE_ENV": "production"
       }
     }
   },
   "dependencies": {
+    "concurrently": "^3.5.1",
     "config": "^1.29.0",
     "prop-types": "^15.6.0",
     "react": "^16.2.0",

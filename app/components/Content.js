@@ -102,7 +102,7 @@ export default class Content extends Component {
 
 	render() {
 		const {doorSensor} = this.props;
-		console.log(`Content Door Sensor: ${doorSensor}`);
+
 		return (
 			<View style={styles.myView}>
 				<StatusText

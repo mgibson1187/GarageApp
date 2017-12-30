@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {AppRegistry, View, Text, StyleSheet, TouchableOpacity} from 'react-native';
-import PropTypes from 'prop-types'
+import PropTypes from 'prop-types';
 
 const styles = StyleSheet.create({
 	myView: {
@@ -33,6 +33,7 @@ export default class Button extends Component {
 
 	render() {
 		const {onPress} = this.props;
+
 		return (
 			<View style={styles.myView}>
 				<TouchableOpacity style={styles.button} onPress={onPress}>
