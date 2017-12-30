@@ -1,5 +1,7 @@
-var myInfo = {
-  ip_address: "http://0.0.0.0:8080/"
+export default {
+  server: {
+    protocol: "http",
+    host: "0.0.0.0",
+    port: "8080"
+  }
 };
-
-module.exports.myInfo = myInfo;

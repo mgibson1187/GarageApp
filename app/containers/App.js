@@ -22,7 +22,7 @@ export default class App extends Component {
       connection: null
     };
     this._handleNetInfoChange = this._handleNetInfoChange.bind(this);
-    this.socket = new SocketIOClient(config.myInfo.ip_address);
+    this.socket = new SocketIOClient(`${config.server.protocol}://${config.server.host}:${config.server.port}`);
     this.onPress = this.onPress.bind(this);
     this.socket.on('recieve', (res) => {
       this.setState({

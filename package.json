@@ -22,7 +22,6 @@
   },
   "dependencies": {
     "concurrently": "^3.5.1",
-    "config": "^1.29.0",
     "prop-types": "^15.6.0",
     "react": "^16.2.0",
     "react-native": "^0.51.0",

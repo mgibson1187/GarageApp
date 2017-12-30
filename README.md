@@ -13,3 +13,8 @@ To run start-prod, first follow the instructions at [react-native](http://facebo
 ```bash
 npm run start-prod
 ```
+
+# Look at connected devices
+```bash
+adb devices
+```
