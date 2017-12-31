@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {AppRegistry, NetInfo, View, StyleSheet} from 'react-native';
+import {AppRegistry, BackHandler, NetInfo, View, StyleSheet} from 'react-native';
 import SocketIOClient from 'socket.io-client';
 import config from '../../config';
 
@@ -34,6 +34,9 @@ export default class App extends Component {
   componentWillMount() {
     NetInfo.fetch().then(this._handleNetInfoChange);
     NetInfo.addEventListener('change', this._handleNetInfoChange);
+    BackHandler.addEventListener('hardwareBackPress', () => {
+      BackHandler.exitApp();
+    });
   }
 
   componentWillUnmount() {
