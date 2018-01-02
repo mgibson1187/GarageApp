@@ -22,11 +22,16 @@ export default class App extends Component {
       connection: null
     };
     this._handleNetInfoChange = this._handleNetInfoChange.bind(this);
-    this.socket = new SocketIOClient(`${config.server.protocol}://${config.server.host}:${config.server.port}`);
     this.onPress = this.onPress.bind(this);
+    this.socket = new SocketIOClient(`${config.server.protocol}://${config.server.host}:${config.server.port}`);
     this.socket.on('recieve', (res) => {
       this.setState({
         doorSensor: res.state
+      });
+    });
+    this.socket.on('disconnect', () => {
+      this.setState({
+        doorSensor: null
       });
     });
   }
