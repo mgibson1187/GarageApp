@@ -31,6 +31,7 @@
     "global-require": "off",
     "semi":"error",
     "react/no-multi-comp": "off",
+    "class-methods-use-this": "off",
     "react/jsx-filename-extension": [
       1,
       {

@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "start-dev": "better-npm-run start-dev",
-    "start-prod": "better-npm-run start-prod"
+    "start-prod": "better-npm-run start-prod",
+    "clean-gradle": "cd android/ && ./gradlew clean"
   },
   "betterScripts": {
     "start-dev": {

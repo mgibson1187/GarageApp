@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {AppRegistry, BackHandler, NetInfo, View, StyleSheet} from 'react-native';
+import {AppRegistry, View, StyleSheet} from 'react-native';
 import SocketIOClient from 'socket.io-client';
 import config from '../../config';
 
@@ -15,67 +15,52 @@ const styles = StyleSheet.create({
 });
 
 export default class App extends Component {
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
     this.state = {
-      doorSensor: null,
-      connection: null
+      connection: false,
+      doorSensor: null
     };
-    this._handleNetInfoChange = this._handleNetInfoChange.bind(this);
-    this.onPress = this.onPress.bind(this);
     this.socket = new SocketIOClient(`${config.server.protocol}://${config.server.host}:${config.server.port}`);
-    this.socket.on('recieve', (res) => {
-      this.setState({
-        doorSensor: res.state
-      });
-    });
-    this.socket.on('disconnect', () => {
-      this.setState({
-        doorSensor: null
-      });
-    });
+    this.handleButtonPress = this.handleButtonPress.bind(this);
+    this.handleconnectionChange = this.handleconnectionChange.bind(this);
+    this.handleStatusChange = this.handleStatusChange.bind(this);
   }
 
   componentWillMount() {
-    NetInfo.fetch().then(this._handleNetInfoChange);
-    NetInfo.addEventListener('change', this._handleNetInfoChange);
-    BackHandler.addEventListener('hardwareBackPress', () => {
-      BackHandler.exitApp();
-    });
+    this.socket.on('recieve', this.handleStatusChange);
+    this.socket.on('disconnect', this.handleconnectionChange);
   }
 
-  componentWillUnmount() {
-    NetInfo.removeEventListener('change', this._handleNetInfoChange);
-  }
-
-  onPress() {
+  handleButtonPress() {
     this.socket.emit('reply', {});
   }
 
-  _handleNetInfoChange(info) {
-    if (info === 'NONE') {
-      this.setState({
-        connection: info,
-        doorSensor: null
-      });
-    } else {
-      this.setState({
-        connection: info
-      });
-    }
+  handleconnectionChange() {
+    this.setState({
+      connection: false,
+      doorSensor: null
+    });
+  }
+
+  handleStatusChange(info) {
+    this.setState({
+      connection: true,
+      doorSensor: info.state
+    });
   }
 
   render() {
-    const {doorSensor} = this.state;
+    const {connection, doorSensor} = this.state;
 
     return (
       <View style={styles.myView}>
         <Intro />
         <Content
           doorSensor={doorSensor} />
-        {(doorSensor === null) ? (null) : (
+        {(!connection) ? (null) : (
           <Button
-            onPress={this.onPress} />
+            onPress={this.handleButtonPress} />
         )}
       </View>
     );
